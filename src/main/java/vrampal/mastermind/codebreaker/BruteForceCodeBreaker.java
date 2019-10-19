@@ -1,9 +1,17 @@
 package vrampal.mastermind.codebreaker;
 
+import java.util.Random;
+
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import vrampal.mastermind.Hint;
 
+@RequiredArgsConstructor
 public class BruteForceCodeBreaker extends RandomCodeBreaker {
+  
+  private final Random rand = new Random();
+  
+  private final int accuracy;
   
   @Getter
   private long hypothesisCount = 0;
@@ -26,11 +34,15 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
       int[] prevGuess = board.guesses[prevTurnIdx];
       Hint hint = new Hint(hypothesis, prevGuess);
       Hint prevHint = board.hints[prevTurnIdx];
-      if (!prevHint.equals(hint)) {
+      if (!prevHint.equals(hint) && isAccurate()) {
         return false;
       }
     }
     return true;
+  }
+  
+  private boolean isAccurate() {
+    return (rand.nextInt(100) < accuracy);
   }
   
 }
