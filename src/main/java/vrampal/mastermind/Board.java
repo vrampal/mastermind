@@ -7,9 +7,9 @@ public class Board {
   
   public final int gameLength; // Number of turns before game end
   
-  public final int pinCount; // Number of pins
+  public final int pinCount; // Number of pins in the secret
   
-  public final int maxVal; // Pin are values in 0..(MAX_VAL-1)
+  public final int maxVal; // Pin values in 0..(MAX_VAL-1)
   
   public final int[][] guesses;
   
