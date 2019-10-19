@@ -5,14 +5,9 @@ sudo: false
 jdk:
   - openjdk8
   
-addons:
-  sonarcloud:
-    organization: "vrampal-bitbucket"
-
 cache:
   directories:
     - $HOME/.m2/repository
 
 script:
   - mvn -B -V clean verify
-  - mvn sonar:sonar
