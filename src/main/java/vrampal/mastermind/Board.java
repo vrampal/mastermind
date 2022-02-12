@@ -41,11 +41,11 @@ public class Board {
     return true;
   }
 
-  long possibleGuessCount() {
+  public long possibleGuessCount() {
     return (long) Math.pow(maxVal, pinCount);
   }
 
-  int[] long2Guess(long value) {
+  public int[] long2Guess(long value) {
     if (SAFETY_CHECK && ((value < 0) || (value >= possibleGuessCount()))) {
       throw new MastermindException("Invalid value");
     }

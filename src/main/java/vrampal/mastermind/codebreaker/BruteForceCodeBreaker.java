@@ -19,14 +19,38 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
   @Override
   public void play(int turnIdx) {
     int[] hypothesis;
+    if (turnIdx == 0) {
+      hypothesis = randomGuess();
+    } else {
+      hypothesis = compute1(turnIdx);
+    }
+    board.recordGuess(turnIdx, hypothesis);
+  }
+  
+  int[] compute1(int turnIdx) {
+    int[] hypothesis;
     boolean possible;
+    
     do {
       hypothesis = randomGuess();
       hypothesisCount++;
       possible = checkHypothesis(turnIdx, hypothesis);
     } while (!possible);
     
-    board.recordGuess(turnIdx, hypothesis);
+    return hypothesis;
+  }
+  
+  int[] compute2(int turnIdx) {
+    int[] hypothesis = board.long2Guess(hypothesisCount);
+    boolean possible = checkHypothesis(turnIdx, hypothesis);
+    
+    while (!possible) {
+      hypothesisCount++;
+      hypothesis = board.long2Guess(hypothesisCount);
+      possible = checkHypothesis(turnIdx, hypothesis);
+    }
+    
+    return hypothesis;
   }
 
   private boolean checkHypothesis(int turnIdx, int[] hypothesis) {

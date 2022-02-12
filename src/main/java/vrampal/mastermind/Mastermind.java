@@ -7,11 +7,11 @@ import vrampal.mastermind.codemaker.*;
 @Slf4j
 public class Mastermind {
 
-  public static void main(String[] args) {
-    new Mastermind().playOneGame();
-  }
-  
   private static final long GAME_COUNT_FOR_STATS = 10_000L;
+  
+  public static void main(String[] args) {
+    new Mastermind().computeStats();
+  }
   
   private long gameCount = 0;
   
