@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,13 @@ import vrampal.mastermind.Hint;
 @RequiredArgsConstructor
 @Slf4j
 public class EntropicCodeBreaker implements CodeBreaker {
+  
+  @AllArgsConstructor
+  static final class MutableCounter {
+    
+    int value;
+
+  }
   
   private static final double LOG2 = Math.log(2.0d);
   
@@ -98,30 +106,27 @@ public class EntropicCodeBreaker implements CodeBreaker {
   }
 
   private double computeEntropy(int[] secret, List<Long> possibleSecrets) {
-    Map<Hint, Integer> possibleOutcomes = new HashMap<>();
+    Map<Hint, MutableCounter> possibleOutcomes = new HashMap<>();
     
     for(long value : possibleSecrets) {
       int[] hypothesis = board.long2Guess(value);
       Hint hint = new Hint(secret, hypothesis);
       if (!possibleOutcomes.containsKey(hint)) {
-        possibleOutcomes.put(hint, 1);
+        possibleOutcomes.put(hint, new MutableCounter(1));
       } else {
-        int count = possibleOutcomes.get(hint);
-        count++;
-        possibleOutcomes.put(hint, count);
+        MutableCounter count = possibleOutcomes.get(hint);
+        count.value++;
       }
     }
     
-    double totalEntropy = 0.0d;
+    double entropy = 0.0d;
     double possibleSecretsSize = (double) possibleSecrets.size();
-    for(Entry<Hint, Integer> entry : possibleOutcomes.entrySet()) {
-      int count = entry.getValue();
-      double proba = count / possibleSecretsSize;
-      double localEntropy = log2(1.0d / proba);
-      totalEntropy += proba * localEntropy;
+    for(MutableCounter counter : possibleOutcomes.values()) {
+      double proba = counter.value / possibleSecretsSize;
+      entropy += proba * log2(1.0d / proba);
     }
     
-    return totalEntropy;
+    return entropy;
   }
 
   private double log2(double value) {
