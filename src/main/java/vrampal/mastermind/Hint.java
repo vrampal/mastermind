@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
-@ToString
+@ToString(of = {"blackPeg", "whitePeg"})
 public class Hint {
 
   public final int blackPeg; // Right color at right place
