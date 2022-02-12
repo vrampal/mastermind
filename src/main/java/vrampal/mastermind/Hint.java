@@ -13,6 +13,8 @@ public class Hint {
 
   public final int whitePeg; // Right color at wrong place
 
+  public final boolean victory; // Is it a victory
+
   public Hint(int[] secret, int[] guess) {
     int size = secret.length;
     boolean[] secretPinUsed = new boolean[size];
@@ -28,6 +30,7 @@ public class Hint {
       }
     }
     blackPeg = blackP;
+    victory = (size == blackP);
 
     // Search for white peg
     int whiteP = 0;

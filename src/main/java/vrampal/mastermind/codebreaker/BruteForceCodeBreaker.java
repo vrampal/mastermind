@@ -33,6 +33,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     int[] hypothesis;
     boolean possible;
     
+    // Take a random guess and check if it's valid
     do {
       hypothesis = randomGuess();
       hypothesisCount++;
@@ -46,6 +47,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     int[] hypothesis = board.long2Guess(hypothesisCount);
     boolean possible = checkHypothesis(turnIdx, hypothesis);
     
+    // Try all guess until one is valid
     while (!possible) {
       hypothesisCount++;
       hypothesis = board.long2Guess(hypothesisCount);
@@ -56,20 +58,22 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
   }
 
   int[] compute3(int turnIdx) {
-    int[] hypothesis;
     List<Long> possibleGuess = new ArrayList<>();
     
-    long maxHypothesis = board.possibleGuessCount();
-    for (long hypothesisIdx = 0; hypothesisIdx < maxHypothesis; hypothesisIdx++) {
-      hypothesis = board.long2Guess(hypothesisIdx);
+    // Keep only valid guess from all guess possible
+    long maxGuess = board.possibleGuessCount();
+    for (long guessIdx = 0; guessIdx < maxGuess; guessIdx++) {
+      int[] hypothesis = board.long2Guess(guessIdx);
       if (checkHypothesis(turnIdx, hypothesis)) {
-        possibleGuess.add(hypothesisIdx);
+        possibleGuess.add(guessIdx);
       }
     }
-    
     hypothesisCount += possibleGuess.size();
+    
+    // Take a random guess from the valid ones
     int index = rand.nextInt(possibleGuess.size());
-    return board.long2Guess(possibleGuess.get(index));
+    int[] hypothesis = board.long2Guess(possibleGuess.get(index));
+    return hypothesis;
   }
 
   private boolean checkHypothesis(int turnIdx, int[] hypothesis) {

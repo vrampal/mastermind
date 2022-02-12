@@ -82,7 +82,7 @@ public class Board {
     Hint hint = new Hint(secret, guess);
     hints[turnIdx] = hint;
     log.info("Get {}", hint);
-    return (hint.blackPeg == pinCount);
+    return hint.victory;
   }
 
 }
