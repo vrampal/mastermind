@@ -37,7 +37,6 @@ public class Hint {
           if (!secretPinUsed[secretPinIdx] && (guess[guessPinIdx] == secret[secretPinIdx])) {
             whiteP++;
             secretPinUsed[secretPinIdx] = true;
-            // guessPinUsed[guessPinIdx] = true;
             break;
           }
         }

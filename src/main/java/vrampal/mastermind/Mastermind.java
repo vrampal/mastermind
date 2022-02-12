@@ -11,6 +11,8 @@ public class Mastermind {
     new Mastermind().playOneGame();
   }
   
+  private static final long GAME_COUNT_FOR_STATS = 10_000L;
+  
   private long gameCount = 0;
   
   private long codeBreakerWin = 0;
@@ -22,10 +24,12 @@ public class Mastermind {
   private long hypothesisCount = 0;
   
   public void computeStats() {
-    for (long gameIdx = 0; gameIdx < 100_000L; gameIdx++) {
+    log.info("Computing stats on {} games", GAME_COUNT_FOR_STATS);
+
+    for (long gameIdx = 0; gameIdx < GAME_COUNT_FOR_STATS; gameIdx++) {
       playOneGame();
     }
-    
+
     double codeBreakerWinRate = codeBreakerWin / (double) gameCount;
     log.info("codeBreakerWinRate {}", codeBreakerWinRate);
     double codeMakerWinRate = codeMakerWin / (double) gameCount;
