@@ -1,5 +1,7 @@
 package vrampal.mastermind.codebreaker;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import lombok.Getter;
@@ -51,6 +53,23 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     }
     
     return hypothesis;
+  }
+
+  int[] compute3(int turnIdx) {
+    int[] hypothesis;
+    List<Long> possibleGuess = new ArrayList<>();
+    
+    long maxHypothesis = board.possibleGuessCount();
+    for (long hypothesisIdx = 0; hypothesisIdx < maxHypothesis; hypothesisIdx++) {
+      hypothesis = board.long2Guess(hypothesisIdx);
+      if (checkHypothesis(turnIdx, hypothesis)) {
+        possibleGuess.add(hypothesisIdx);
+      }
+    }
+    
+    hypothesisCount += possibleGuess.size();
+    int index = rand.nextInt(possibleGuess.size());
+    return board.long2Guess(possibleGuess.get(index));
   }
 
   private boolean checkHypothesis(int turnIdx, int[] hypothesis) {

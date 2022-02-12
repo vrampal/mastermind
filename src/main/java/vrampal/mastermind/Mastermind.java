@@ -10,7 +10,7 @@ public class Mastermind {
   private static final long GAME_COUNT_FOR_STATS = 10_000L;
   
   public static void main(String[] args) {
-    new Mastermind().computeStats();
+    new Mastermind().playOneGame();
   }
   
   private long gameCount = 0;
