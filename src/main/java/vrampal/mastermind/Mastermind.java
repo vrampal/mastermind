@@ -48,9 +48,9 @@ public class Mastermind {
     codeMaker.setBoard(board);
     codeMaker.play();
 
-    int accuracy = 65; // 65% accuracy to give a chance to human player xD
-    BruteForceCodeBreaker codeBreaker = new BruteForceCodeBreaker(accuracy);
-    // EntropicCodeBreaker codeBreaker = new EntropicCodeBreaker();
+    // int accuracy = 65; // 65% accuracy to give a chance to human player xD
+    // BruteForceCodeBreaker codeBreaker = new BruteForceCodeBreaker(accuracy);
+    EntropicCodeBreaker codeBreaker = new EntropicCodeBreaker();
     codeBreaker.setBoard(board);
     
     int turnIdx = 0;

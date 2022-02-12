@@ -59,10 +59,14 @@ public class EntropicCodeBreaker implements CodeBreaker {
       }
     }
     hypothesisCount += possibleSecrets.size();
-    // int possibleSecretsSize = possibleSecrets.size();
-    // log.debug("Possible secret: {}", possibleSecretsSize);
-    // double remainingEntropy = log2(possibleSecretsSize);
-    // log.debug("Remaining entropy: {}", remainingEntropy);
+    int possibleSecretsSize = possibleSecrets.size();
+    log.info("Possible secret: {}", possibleSecretsSize);
+    if (possibleSecretsSize == 1) {
+      return board.long2Guess(possibleSecrets.get(0));
+    }
+    
+    double remainingEntropy = log2(possibleSecretsSize);
+    log.info("Remaining entropy: {}", remainingEntropy);
 
     // Find the hypothesis with highest entropy
     double bestEntropy = -1.0d;
@@ -75,9 +79,9 @@ public class EntropicCodeBreaker implements CodeBreaker {
         bestHypothesis = hypothesis;
       }
     }
-    // log.debug("Best entropy: {}", bestEntropy);
-    // double expectedEntropy = remainingEntropy - bestEntropy;
-    // log.info("Expected entropy: {}", expectedEntropy);
+    log.info("Best entropy: {}", bestEntropy);
+    double expectedEntropy = remainingEntropy - bestEntropy;
+    log.info("Expected entropy: {}", expectedEntropy);
     return bestHypothesis;
   }
   
