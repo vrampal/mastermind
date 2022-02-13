@@ -31,16 +31,18 @@ public class Hint {
     }
     blackPeg = blackP;
     victory = (size == blackP);
-
+    
     // Search for white peg
     int whiteP = 0;
-    for (int guessPinIdx = 0; guessPinIdx < size; guessPinIdx++) {
-      if (!guessPinUsed[guessPinIdx]) {
-        for (int secretPinIdx = 0; secretPinIdx < size; secretPinIdx++) {
-          if (!secretPinUsed[secretPinIdx] && (guess[guessPinIdx] == secret[secretPinIdx])) {
-            whiteP++;
-            secretPinUsed[secretPinIdx] = true;
-            break;
+    if (!victory) {
+      for (int guessPinIdx = 0; guessPinIdx < size; guessPinIdx++) {
+        if (!guessPinUsed[guessPinIdx]) {
+          for (int secretPinIdx = 0; secretPinIdx < size; secretPinIdx++) {
+            if (!secretPinUsed[secretPinIdx] && (guess[guessPinIdx] == secret[secretPinIdx])) {
+              whiteP++;
+              secretPinUsed[secretPinIdx] = true;
+              break;
+            }
           }
         }
       }

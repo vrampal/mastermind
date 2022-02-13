@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Board {
 
-  private final boolean SAFETY_CHECK = true;
+  private final boolean SAFETY_CHECK = false;
 
   public final int gameLength; // Number of turns before game end
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,15 +65,18 @@ public class EntropicCodeBreaker implements CodeBreaker {
         possibleSecrets.add(guessIdx);
       }
     }
-    hypothesisCount += possibleSecrets.size();
     int possibleSecretsSize = possibleSecrets.size();
-    log.info("Possible secret: {}", possibleSecretsSize);
+    hypothesisCount += possibleSecretsSize;
+    log.debug("Possible secret: {}", possibleSecretsSize);
     if (possibleSecretsSize == 1) {
       return board.long2Guess(possibleSecrets.get(0));
     }
     
-    double remainingEntropy = log2(possibleSecretsSize);
-    log.info("Remaining entropy: {}", remainingEntropy);
+    double remainingEntropy = 0.0d;
+    if (log.isDebugEnabled()) {
+      remainingEntropy = log2(possibleSecretsSize);
+      log.debug("Remaining entropy: {}", remainingEntropy);
+    }
 
     // Find the hypothesis with highest entropy
     double bestEntropy = -1.0d;
@@ -87,9 +89,11 @@ public class EntropicCodeBreaker implements CodeBreaker {
         bestHypothesis = hypothesis;
       }
     }
-    log.info("Best entropy: {}", bestEntropy);
-    double expectedEntropy = remainingEntropy - bestEntropy;
-    log.info("Expected entropy: {}", expectedEntropy);
+    if (log.isDebugEnabled()) {
+      log.debug("Best entropy: {}", bestEntropy);
+      double expectedEntropy = remainingEntropy - bestEntropy;
+      log.debug("Expected entropy: {}", expectedEntropy);
+    }
     return bestHypothesis;
   }
   
