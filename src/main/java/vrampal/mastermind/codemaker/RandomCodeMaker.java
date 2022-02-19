@@ -8,14 +8,14 @@ import vrampal.mastermind.CodeMaker;
 
 public class RandomCodeMaker implements CodeMaker {
 
+  private final Random rand = new Random();
+
   @Setter
   private Board board;
 
   @Override
   public void play() {
     int[] secret = new int[board.pinCount];
-
-    Random rand = new Random();
     for (int pinIdx = 0; pinIdx < board.pinCount; pinIdx++) {
       secret[pinIdx] = rand.nextInt(board.maxVal);
     }

@@ -124,7 +124,7 @@ public class EntropicCodeBreaker implements CodeBreaker {
     }
     
     double entropy = 0.0d;
-    double possibleSecretsSize = (double) possibleSecrets.size();
+    double possibleSecretsSize = possibleSecrets.size();
     for(MutableCounter counter : possibleOutcomes.values()) {
       double proba = counter.value / possibleSecretsSize;
       entropy += proba * log2(1.0d / proba);
