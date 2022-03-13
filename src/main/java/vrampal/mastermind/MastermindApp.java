@@ -22,8 +22,6 @@ public class MastermindApp {
   
   private long turnCount = 0;
   
-  private long hypothesisCount = 0;
-  
   public void computeStats() {
     log.info("Computing stats on {} games", GAME_COUNT_FOR_STATS);
 
@@ -40,8 +38,6 @@ public class MastermindApp {
     log.info("codeMakerWinRate {}", codeMakerWinRate);
     double avgTurnCount = turnCount / (double) gameCount;
     log.info("avgTurnCount {}", avgTurnCount);
-    double avgHypothesis = hypothesisCount / (double) gameCount;
-    log.info("avgHypothesis {}", avgHypothesis);
   }
 
   public void playOneGame() {
@@ -76,8 +72,7 @@ public class MastermindApp {
       codeMakerWin++;
     }
     turnCount += turnIdx;
-    hypothesisCount += codeBreaker.getHypothesisCount();
-    log.info("{} win, {} turns, {} hypothesis", winner, turnIdx, codeBreaker.getHypothesisCount());
+    log.info("{} win, {} turns", winner, turnIdx);
   }
 
 }

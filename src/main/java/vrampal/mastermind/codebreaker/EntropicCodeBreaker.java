@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import vrampal.mastermind.Hint;
 
-@RequiredArgsConstructor
 @Slf4j
 public class EntropicCodeBreaker extends BruteForceCodeBreaker {
   
@@ -39,15 +37,13 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     for(int idx = 0; idx < size; idx++) {
       guess[idx] = size - idx - 1;
     }
-    hypothesisCount += 1;
     return guess;
   }
   
   int[] compute(int turnIdx) {
-    List<Long> possibleSecrets = generatePossibleGuess(turnIdx);
+    updatePossibleSecrets(turnIdx);
+    
     int possibleSecretsSize = possibleSecrets.size();
-    hypothesisCount += possibleSecretsSize;
-    log.debug("Possible secret: {}", possibleSecretsSize);
     if (possibleSecretsSize == 1) {
       return board.long2Guess(possibleSecrets.get(0));
     }

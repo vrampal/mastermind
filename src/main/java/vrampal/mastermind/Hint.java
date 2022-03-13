@@ -9,7 +9,7 @@ import lombok.ToString;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode
 @ToString(of = {"blackPeg", "whitePeg"})
-public class Hint {
+public final class Hint {
 
   @Getter
   private final int blackPeg; // Right color at right place
@@ -53,12 +53,6 @@ public class Hint {
       }
     }
     whitePeg = whiteP;
-    // nanoDelay(1_000_000L); // Simulate a slow computation
   }
 
-  private void nanoDelay(long delay) {
-    long end = System.nanoTime() + delay;
-    while (System.nanoTime() < end);
-  }
-  
 }

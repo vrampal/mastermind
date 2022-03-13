@@ -3,7 +3,7 @@ package vrampal.mastermind;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class Board {
+public final class Board {
 
   private static final boolean SAFETY_CHECK = true; // Disable for maximum performance
 
@@ -13,9 +13,9 @@ public class Board {
 
   public final int maxVal; // Pin values in 0..(MAX_VAL-1)
 
-  public final int[][] guesses;
+  private final int[][] guesses;
 
-  public final Hint[] hints;
+  private final Hint[] hints;
 
   private int currentTurnIdx = 0;
 
@@ -27,6 +27,14 @@ public class Board {
     this.maxVal = maxVal;
     guesses = new int[gameLength][];
     hints = new Hint[gameLength];
+  }
+  
+  public int[] getGuess(int turnIdx) {
+    return guesses[turnIdx];
+  }
+  
+  public Hint getHint(int turnIdx) {
+    return hints[turnIdx];
   }
 
   public long countPossibleGuess() {
