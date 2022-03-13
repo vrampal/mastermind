@@ -46,7 +46,7 @@ public class MastermindApp {
     Board board = new Board(12, 4, 8);
     CodeMaker codeMaker = new RandomCodeMaker();
     codeMaker.setBoard(board);
-    codeMaker.play();
+    codeMaker.selectSecret();
 
     BruteForceCodeBreaker codeBreaker;
     // codeBreaker = new BruteForceCodeBreaker();

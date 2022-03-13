@@ -4,6 +4,6 @@ public interface CodeMaker {
 
   void setBoard(Board board);
 
-  void play();
+  void selectSecret();
 
 }

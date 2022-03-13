@@ -14,7 +14,7 @@ public class RandomCodeMaker implements CodeMaker {
   private Board board;
 
   @Override
-  public void play() {
+  public void selectSecret() {
     int[] secret = randomGen();
     board.recordSecret(secret);
   }
