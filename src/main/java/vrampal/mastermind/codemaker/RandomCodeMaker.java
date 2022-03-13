@@ -16,12 +16,16 @@ public class RandomCodeMaker implements CodeMaker {
 
   @Override
   public void play() {
-    int[] secret = new int[board.pinCount];
-    for (int pinIdx = 0; pinIdx < board.pinCount; pinIdx++) {
-      secret[pinIdx] = rand.nextInt(board.maxVal);
-    }
-    
+    int[] secret = randomGen();
     board.recordSecret(secret);
   }
 
+  protected final int[] randomGen() {
+    int[] guess = new int[board.pinCount];
+    for (int pinIdx = 0; pinIdx < board.pinCount; pinIdx++) {
+      guess[pinIdx] = rand.nextInt(board.maxVal);
+    }
+    return guess;
+  }
+  
 }

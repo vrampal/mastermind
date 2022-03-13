@@ -1,6 +1,7 @@
 package vrampal.mastermind;
 
 import lombok.extern.slf4j.Slf4j;
+import vrampal.mastermind.codebreaker.BruteForceCodeBreaker;
 import vrampal.mastermind.codebreaker.EntropicCodeBreaker;
 import vrampal.mastermind.codemaker.RandomCodeMaker;
 
@@ -48,9 +49,10 @@ public class MastermindApp {
     codeMaker.setBoard(board);
     codeMaker.play();
 
-    // int accuracy = 65; // 65% accuracy to give a chance to human player xD
-    // BruteForceCodeBreaker codeBreaker = new BruteForceCodeBreaker(accuracy);
-    EntropicCodeBreaker codeBreaker = new EntropicCodeBreaker();
+    BruteForceCodeBreaker codeBreaker;
+    // codeBreaker = new BruteForceCodeBreaker();
+    codeBreaker = new EntropicCodeBreaker();
+    // codeBreaker.setAccuracy(65); // 65% accuracy to give a chance to human player xD
     codeBreaker.setBoard(board);
     
     int turnIdx = 0;

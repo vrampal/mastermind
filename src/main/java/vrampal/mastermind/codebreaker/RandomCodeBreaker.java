@@ -9,22 +9,18 @@ import vrampal.mastermind.CodeBreaker;
 
 public class RandomCodeBreaker implements CodeBreaker {
 
-  private final Random rand = new SecureRandom();
+  protected final Random rand = new SecureRandom();
 
   @Setter
   protected Board board;
   
   @Override
   public void play(int turnIdx) {
-    int[] guess = new int[board.pinCount];
-    for (int pinIdx = 0; pinIdx < board.pinCount; pinIdx++) {
-      guess[pinIdx] = rand.nextInt(board.maxVal);
-    }
-    
+    int[] guess = randomGen();
     board.recordGuess(turnIdx, guess);
   }
   
-  protected int[] randomGuess() {
+  protected final int[] randomGen() {
     int[] guess = new int[board.pinCount];
     for (int pinIdx = 0; pinIdx < board.pinCount; pinIdx++) {
       guess[pinIdx] = rand.nextInt(board.maxVal);

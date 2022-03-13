@@ -2,27 +2,26 @@ package vrampal.mastermind.codebreaker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import vrampal.mastermind.Hint;
 
 @RequiredArgsConstructor
 public class BruteForceCodeBreaker extends RandomCodeBreaker {
   
-  private final Random rand = new Random();
-  
-  private final int accuracy;
+  @Setter
+  private int accuracy = 100; // Accuracy in percent, lower it to give a change to human player
   
   @Getter
-  private long hypothesisCount = 0;
+  protected long hypothesisCount = 0;
   
   @Override
   public void play(int turnIdx) {
     int[] hypothesis;
     if (turnIdx == 0) {
-      hypothesis = randomGuess();
+      hypothesis = randomGen();
     } else {
       hypothesis = compute1(turnIdx);
     }
@@ -35,9 +34,9 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     
     // Take a random guess and check if it's valid
     do {
-      hypothesis = randomGuess();
+      hypothesis = randomGen();
       hypothesisCount++;
-      possible = checkHypothesis(turnIdx, hypothesis);
+      possible = checkHypothesisPossible(turnIdx, hypothesis);
     } while (!possible);
     
     return hypothesis;
@@ -45,29 +44,20 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
   
   int[] compute2(int turnIdx) {
     int[] hypothesis = board.long2Guess(hypothesisCount);
-    boolean possible = checkHypothesis(turnIdx, hypothesis);
+    boolean possible = checkHypothesisPossible(turnIdx, hypothesis);
     
     // Try all guess until one is valid
     while (!possible) {
       hypothesisCount++;
       hypothesis = board.long2Guess(hypothesisCount);
-      possible = checkHypothesis(turnIdx, hypothesis);
+      possible = checkHypothesisPossible(turnIdx, hypothesis);
     }
     
     return hypothesis;
   }
 
   int[] compute3(int turnIdx) {
-    List<Long> possibleGuess = new ArrayList<>();
-    
-    // Keep only valid guess from all guess possible
-    long maxGuess = board.countPossibleGuess();
-    for (long guessIdx = 0; guessIdx < maxGuess; guessIdx++) {
-      int[] hypothesis = board.long2Guess(guessIdx);
-      if (checkHypothesis(turnIdx, hypothesis)) {
-        possibleGuess.add(guessIdx);
-      }
-    }
+    List<Long> possibleGuess = generatePossibleGuess(turnIdx);
     hypothesisCount += possibleGuess.size();
     
     // Take a random guess from the valid ones
@@ -76,7 +66,11 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     return hypothesis;
   }
 
-  private boolean checkHypothesis(int turnIdx, int[] hypothesis) {
+  private boolean isAccurate() {
+    return (rand.nextInt(100) < accuracy);
+  }
+
+  protected final boolean checkHypothesisPossible(int turnIdx, int[] hypothesis) {
     for (int prevTurnIdx = 0; prevTurnIdx < turnIdx; prevTurnIdx++) {
       int[] prevGuess = board.guesses[prevTurnIdx];
       Hint hint = new Hint(hypothesis, prevGuess);
@@ -88,8 +82,19 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     return true;
   }
   
-  private boolean isAccurate() {
-    return (rand.nextInt(100) < accuracy);
+  protected final List<Long> generatePossibleGuess(int turnIdx) {
+    List<Long> possibleGuess = new ArrayList<>();
+    
+    // Keep only valid guess from all guess possible
+    long maxGuess = board.countPossibleGuess();
+    for (long guessIdx = 0; guessIdx < maxGuess; guessIdx++) {
+      int[] hypothesis = board.long2Guess(guessIdx);
+      if (checkHypothesisPossible(turnIdx, hypothesis)) {
+        possibleGuess.add(guessIdx);
+      }
+    }
+
+    return possibleGuess;
   }
   
 }
