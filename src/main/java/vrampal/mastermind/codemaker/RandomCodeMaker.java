@@ -1,5 +1,6 @@
 package vrampal.mastermind.codemaker;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 import lombok.Setter;
@@ -8,7 +9,7 @@ import vrampal.mastermind.CodeMaker;
 
 public class RandomCodeMaker implements CodeMaker {
 
-  private final Random rand = new Random();
+  private final Random rand = new SecureRandom();
 
   @Setter
   private Board board;
