@@ -1,6 +1,5 @@
 package vrampal.mastermind.codebreaker;
 
-import java.security.SecureRandom;
 import java.util.Random;
 
 import lombok.Setter;
@@ -9,7 +8,7 @@ import vrampal.mastermind.CodeBreaker;
 
 public class RandomCodeBreaker implements CodeBreaker {
 
-  protected final Random rand = new SecureRandom();
+  protected final Random rand = new Random();
 
   @Setter
   protected Board board;
