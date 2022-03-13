@@ -3,18 +3,14 @@ package vrampal.mastermind.codebreaker;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import vrampal.mastermind.Hint;
 
 @Slf4j
 public class EntropicCodeBreaker extends BruteForceCodeBreaker {
   
-  @AllArgsConstructor
   static final class MutableCounter {
-    
     int value;
-
   }
   
   private static final double LOG2 = Math.log(2.0d);
@@ -76,12 +72,14 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     
     for(int[] hypothesis : possibleSecrets) {
       Hint hint = new Hint(secret, hypothesis);
+      MutableCounter count;
       if (!possibleOutcomes.containsKey(hint)) {
-        possibleOutcomes.put(hint, new MutableCounter(1));
+        count = new MutableCounter();
+        possibleOutcomes.put(hint, count);
       } else {
-        MutableCounter count = possibleOutcomes.get(hint);
-        count.value++;
+        count = possibleOutcomes.get(hint);
       }
+      count.value++;
     }
     
     double entropy = 0.0d;
@@ -94,7 +92,7 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     return entropy;
   }
 
-  private double log2(double value) {
+  private static double log2(double value) {
     return Math.log(value) / LOG2;
   }
   

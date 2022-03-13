@@ -43,7 +43,7 @@ public class MastermindApp {
   public void playOneGame() {
     log.info("Starting new game");
     
-    Board board = new Board(12, 4, 8);
+    Board board = new Board(12, 4, 8); // 12 turns, 4 pins, 8 colors
     CodeMaker codeMaker = new RandomCodeMaker();
     codeMaker.setBoard(board);
     codeMaker.selectSecret();
