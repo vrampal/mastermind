@@ -1,7 +1,6 @@
 package vrampal.mastermind.codebreaker;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -45,7 +44,7 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     
     int possibleSecretsSize = possibleSecrets.size();
     if (possibleSecretsSize == 1) {
-      return board.long2Guess(possibleSecrets.get(0));
+      return possibleSecrets.get(0);
     }
     
     double remainingEntropy = 0.0d;
@@ -57,9 +56,8 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     // Find the hypothesis with highest entropy
     double bestEntropy = -1.0d;
     int[] bestHypothesis = null;
-    for(long value : possibleSecrets) {
-      int[] hypothesis = board.long2Guess(value);
-      double entropy = computeEntropy(hypothesis, possibleSecrets);
+    for(int[] hypothesis : possibleSecrets) {
+      double entropy = computeEntropy(hypothesis);
       if (bestEntropy < entropy) {
         bestEntropy = entropy;
         bestHypothesis = hypothesis;
@@ -73,11 +71,10 @@ public class EntropicCodeBreaker extends BruteForceCodeBreaker {
     return bestHypothesis;
   }
   
-  private double computeEntropy(int[] secret, List<Long> possibleSecrets) {
+  private double computeEntropy(int[] secret) {
     Map<Hint, MutableCounter> possibleOutcomes = new HashMap<>();
     
-    for(long value : possibleSecrets) {
-      int[] hypothesis = board.long2Guess(value);
+    for(int[] hypothesis : possibleSecrets) {
       Hint hint = new Hint(secret, hypothesis);
       if (!possibleOutcomes.containsKey(hint)) {
         possibleOutcomes.put(hint, new MutableCounter(1));

@@ -16,7 +16,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
 
   private long bruteForceIndex;
 
-  protected List<Long> possibleSecrets;
+  protected List<int[]> possibleSecrets;
 
   @Override
   public void play(int turnIdx) {
@@ -61,7 +61,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
 
     // Take a random guess from the valid ones
     int index = rand.nextInt(possibleSecrets.size());
-    int[] hypothesis = board.long2Guess(possibleSecrets.get(index));
+    int[] hypothesis = possibleSecrets.get(index);
 
     return hypothesis;
   }
@@ -90,15 +90,15 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     for (long guessIdx = 0; guessIdx < maxGuess; guessIdx++) {
       int[] hypothesis = board.long2Guess(guessIdx);
       if (checkHypothesisPossible(turnIdx, hypothesis)) {
-        possibleSecrets.add(guessIdx);
+        possibleSecrets.add(hypothesis);
       }
     }
   }
 
   private void filterPossibleSecrets(int turnIdx) {
-    Iterator<Long> iter = possibleSecrets.iterator();
+    Iterator<int[]> iter = possibleSecrets.iterator();
     while (iter.hasNext()) {
-      int[] hypothesis = board.long2Guess(iter.next());
+      int[] hypothesis = iter.next();
       if (!checkHypothesisPossible(turnIdx, hypothesis)) {
         iter.remove();
       }
