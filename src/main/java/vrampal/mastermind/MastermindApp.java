@@ -2,6 +2,7 @@ package vrampal.mastermind;
 
 import lombok.extern.slf4j.Slf4j;
 import vrampal.mastermind.codebreaker.BruteForceCodeBreaker;
+import vrampal.mastermind.codebreaker.EntropicCodeBreaker;
 import vrampal.mastermind.codemaker.RandomCodeMaker;
 
 @Slf4j
