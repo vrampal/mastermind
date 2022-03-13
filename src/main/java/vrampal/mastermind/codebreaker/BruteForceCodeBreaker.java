@@ -22,6 +22,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     int[] hypothesis;
     if (turnIdx == 0) {
       hypothesis = randomGen();
+      hypothesisCount++;
     } else {
       hypothesis = compute1(turnIdx);
     }
@@ -67,7 +68,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
   }
 
   private boolean isAccurate() {
-    return (rand.nextInt(100) < accuracy);
+    return (accuracy >= 100) || (rand.nextInt(100) < accuracy);
   }
 
   protected final boolean checkHypothesisPossible(int turnIdx, int[] hypothesis) {

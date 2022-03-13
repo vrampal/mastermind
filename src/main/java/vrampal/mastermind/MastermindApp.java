@@ -2,7 +2,6 @@ package vrampal.mastermind;
 
 import lombok.extern.slf4j.Slf4j;
 import vrampal.mastermind.codebreaker.BruteForceCodeBreaker;
-import vrampal.mastermind.codebreaker.EntropicCodeBreaker;
 import vrampal.mastermind.codemaker.RandomCodeMaker;
 
 @Slf4j
@@ -27,10 +26,13 @@ public class MastermindApp {
   public void computeStats() {
     log.info("Computing stats on {} games", GAME_COUNT_FOR_STATS);
 
+    long begin = System.nanoTime();
     for (long gameIdx = 0; gameIdx < GAME_COUNT_FOR_STATS; gameIdx++) {
       playOneGame();
     }
-
+    long elapsed = System.nanoTime() - begin;
+    log.info("Elapsed {} ms", elapsed / 1_000_000L);
+    
     double codeBreakerWinRate = codeBreakerWin / (double) gameCount;
     log.info("codeBreakerWinRate {}", codeBreakerWinRate);
     double codeMakerWinRate = codeMakerWin / (double) gameCount;
