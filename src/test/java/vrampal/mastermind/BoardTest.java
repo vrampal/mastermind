@@ -45,8 +45,8 @@ public class BoardTest {
 
   @Test
   public void testPossibleGuessCount() {
-    assertEquals(4096L, board1.possibleGuessCount());
-    assertEquals(1_000_000L, board2.possibleGuessCount());
+    assertEquals(4096L, board1.countPossibleGuess());
+    assertEquals(1_000_000L, board2.countPossibleGuess());
   }
 
   @Test

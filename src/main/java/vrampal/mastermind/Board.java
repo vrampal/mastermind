@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Board {
 
-  private static final boolean SAFETY_CHECK = false;
+  private static final boolean SAFETY_CHECK = true; // Disable for maximum performance
 
   public final int gameLength; // Number of turns before game end
 
@@ -17,9 +17,9 @@ public class Board {
 
   public final Hint[] hints;
 
-  private int currentTurnIdx;
+  private int currentTurnIdx = 0;
 
-  private int[] secret;
+  private int[] secret = null;
 
   Board(int gameLength, int pinCount, int maxVal) {
     this.gameLength = gameLength;
@@ -27,6 +27,22 @@ public class Board {
     this.maxVal = maxVal;
     guesses = new int[gameLength][];
     hints = new Hint[gameLength];
+  }
+
+  public long countPossibleGuess() {
+    return (long) Math.pow(maxVal, pinCount);
+  }
+
+  public int[] long2Guess(long value) {
+    if (SAFETY_CHECK && ((value < 0) || (value >= countPossibleGuess()))) {
+      throw new MastermindException("Invalid value");
+    }
+    int[] guess = new int[pinCount];
+    for (int pinIdx = 0; pinIdx < pinCount; pinIdx++) {
+      guess[pinIdx] = (int) (value % maxVal);
+      value = value / maxVal;
+    }
+    return guess;
   }
 
   boolean validGuess(int[] guess) {
@@ -41,25 +57,12 @@ public class Board {
     return true;
   }
 
-  public long possibleGuessCount() {
-    return (long) Math.pow(maxVal, pinCount);
-  }
-
-  public int[] long2Guess(long value) {
-    if (SAFETY_CHECK && ((value < 0) || (value >= possibleGuessCount()))) {
-      throw new MastermindException("Invalid value");
-    }
-    int[] guess = new int[pinCount];
-    for (int pinIdx = 0; pinIdx < pinCount; pinIdx++) {
-      guess[pinIdx] = (int) (value % maxVal);
-      value = value / maxVal;
-    }
-    return guess;
-  }
-
   public void recordSecret(int[] secret) {
     if (SAFETY_CHECK && !validGuess(secret)) {
       throw new MastermindException("Invalid secret");
+    }
+    if (SAFETY_CHECK && (this.secret != null)) {
+      throw new MastermindException("Secret already set");
     }
     this.secret = secret;
     log.info("CodeMaker choose {}", secret);
@@ -72,9 +75,12 @@ public class Board {
     if (SAFETY_CHECK && !validGuess(guess)) {
       throw new MastermindException("Invalid guess");
     }
+    if (SAFETY_CHECK && (this.secret == null)) {
+      throw new MastermindException("Secret has not been set yet");
+    }
     guesses[turnIdx] = guess;
-    currentTurnIdx++;
     log.info("CodeBreaker proposed {}", guess);
+    currentTurnIdx++;
   }
 
   boolean checkGuess(int turnIdx) {
@@ -82,7 +88,7 @@ public class Board {
     Hint hint = new Hint(secret, guess);
     hints[turnIdx] = hint;
     log.info("Get {}", hint);
-    return hint.victory;
+    return hint.isVictory();
   }
 
 }

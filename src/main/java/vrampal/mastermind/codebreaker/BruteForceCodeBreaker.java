@@ -61,7 +61,7 @@ public class BruteForceCodeBreaker extends RandomCodeBreaker {
     List<Long> possibleGuess = new ArrayList<>();
     
     // Keep only valid guess from all guess possible
-    long maxGuess = board.possibleGuessCount();
+    long maxGuess = board.countPossibleGuess();
     for (long guessIdx = 0; guessIdx < maxGuess; guessIdx++) {
       int[] hypothesis = board.long2Guess(guessIdx);
       if (checkHypothesis(turnIdx, hypothesis)) {

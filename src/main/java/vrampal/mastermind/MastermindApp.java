@@ -1,16 +1,16 @@
 package vrampal.mastermind;
 
 import lombok.extern.slf4j.Slf4j;
-import vrampal.mastermind.codebreaker.*;
-import vrampal.mastermind.codemaker.*;
+import vrampal.mastermind.codebreaker.EntropicCodeBreaker;
+import vrampal.mastermind.codemaker.RandomCodeMaker;
 
 @Slf4j
-public class Mastermind {
+public class MastermindApp {
 
   private static final long GAME_COUNT_FOR_STATS = 10_000L;
   
   public static void main(String[] args) {
-    new Mastermind().playOneGame();
+    new MastermindApp().playOneGame();
   }
   
   private long gameCount = 0;

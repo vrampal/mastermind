@@ -1,19 +1,24 @@
 package vrampal.mastermind;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode
 @ToString(of = {"blackPeg", "whitePeg"})
 public class Hint {
 
-  public final int blackPeg; // Right color at right place
+  @Getter
+  private final int blackPeg; // Right color at right place
 
-  public final int whitePeg; // Right color at wrong place
+  @Getter
+  private final int whitePeg; // Right color at wrong place
 
-  public final boolean victory; // Is it a victory
+  @Getter
+  private final boolean victory; // Is it a victory
 
   public Hint(int[] secret, int[] guess) {
     int size = secret.length;
