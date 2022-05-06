@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
   schedule:
-    - cron: '16 0 * * 6'
+    - cron: '0 10 * * 4'
 
 jobs:
   analyze:
@@ -19,9 +19,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://git.io/codeql-language-support
+        language: [ 'java' ]
 
     steps:
      - name: Checkout repository
